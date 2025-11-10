@@ -25,9 +25,12 @@ export default function PrayerRosary() {
   const centerY = 180;
 
   const handleBeadClick = (index: number) => {
-    setCount(count + 1);
     setClickedBead(index);
     setTimeout(() => setClickedBead(null), 300);
+  };
+
+  const incrementCount = () => {
+    setCount(count + 1);
   };
 
   const resetCount = () => {
@@ -38,13 +41,13 @@ export default function PrayerRosary() {
     <div className="flex flex-col items-center gap-6 p-6">
       <div className="text-center">
         <h2 className="text-4xl font-bold text-primary mb-2">Четки</h2>
-        <p className="text-muted-foreground">Нажимайте на бусины для подсчета молитв</p>
+        <p className="text-muted-foreground">Нажимайте кнопку +1 для подсчета молитв</p>
       </div>
 
       <Card className="p-6 bg-card/80 backdrop-blur">
         <div className="flex flex-col items-center gap-6">
-          <div className="relative" style={{ width: '360px', height: '360px' }}>
-            <svg width="360" height="360" className="absolute inset-0">
+          <div className="relative" style={{ width: '360px', height: '420px' }}>
+            <svg width="360" height="420" className="absolute inset-0">
               {Array.from({ length: beadCount }).map((_, index) => {
                 const angle = (index * 360) / beadCount - 90;
                 const x = centerX + radius * Math.cos((angle * Math.PI) / 180);
@@ -68,6 +71,11 @@ export default function PrayerRosary() {
                   />
                 );
               })}
+              
+              <g transform="translate(180, 340)">
+                <rect x="-3" y="0" width="6" height="50" fill="#8B6F47" rx="2" />
+                <rect x="-15" y="10" width="30" height="6" fill="#8B6F47" rx="2" />
+              </g>
             </svg>
 
             <div className="absolute inset-0 flex items-center justify-center">
@@ -79,6 +87,11 @@ export default function PrayerRosary() {
           </div>
 
           <div className="flex flex-col gap-4 w-full">
+            <Button onClick={incrementCount} size="lg" className="w-full text-lg">
+              <Icon name="Plus" size={20} className="mr-2" />
+              +1 молитва
+            </Button>
+
             <div>
               <p className="text-sm font-semibold mb-2 text-center">Выберите цвет четок:</p>
               <div className="flex gap-2 justify-center flex-wrap">
